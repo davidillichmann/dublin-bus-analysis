@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 
 interface DiscussionItem {
   headline: string;
@@ -39,8 +40,7 @@ export default function DiscussionSection() {
 
   return (
     <div className="bg-slate-900 rounded-2xl p-7 border border-slate-800 mt-5">
-      <h3 className="mt-0 mb-1.5 text-xl font-extrabold text-slate-50">Discussion</h3>
-      <p className="mt-0 mb-4 text-sm text-slate-500">Click any argument to expand the response.</p>
+      <h3 className="mt-0 mb-4 text-xl font-extrabold text-slate-50">Discussion</h3>
 
       {ITEMS.map((item, i) => {
         const isOpen = openIdx === i;
@@ -51,23 +51,18 @@ export default function DiscussionSection() {
             className={`mb-3 bg-slate-800 rounded-xl overflow-hidden border transition-colors duration-200 cursor-pointer ${isOpen ? "border-slate-700" : "border-slate-800"}`}
           >
             <div className="py-4 px-4.5 select-none">
-              <div className="flex justify-between items-start gap-3">
-                <div className="flex-1">
-                  <div className="text-base font-bold text-slate-100 leading-snug mb-1.5">{item.headline}</div>
-                  <div className="text-sm text-slate-400 leading-relaxed">{item.arg}</div>
-                </div>
-                <div
-                  className="shrink-0 w-7 h-7 rounded-md flex items-center justify-center mt-0.5 transition-all duration-200"
-                  style={{ background: isOpen ? "#334155" : "#0f172a" }}
-                >
-                  <span
-                    className="text-sm transition-transform duration-200 block"
-                    style={{
-                      color: isOpen ? "#e2e8f0" : "#64748b",
-                      transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-                    }}
-                  >▼</span>
-                </div>
+              <div className="text-base font-bold text-slate-100 leading-snug mb-1.5">{item.headline}</div>
+              <div className="text-sm text-slate-400 leading-relaxed mb-3">{item.arg}</div>
+              <div
+                className="flex items-center gap-1 text-xs font-semibold transition-colors duration-200"
+                style={{ color: isOpen ? "#e2e8f0" : "#64748b" }}
+              >
+                <ChevronDown
+                  size={13}
+                  className="transition-transform duration-200"
+                  style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+                />
+                {isOpen ? "Hide response" : "View response"}
               </div>
             </div>
             {isOpen && (
