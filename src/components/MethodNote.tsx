@@ -1,4 +1,5 @@
 import { useState } from "react";
+import {ChevronDown, Ruler} from "lucide-react";
 
 export default function MethodNote() {
   const [open, setOpen] = useState(false);
@@ -7,17 +8,17 @@ export default function MethodNote() {
     <div className="bg-slate-900 rounded-xl border border-slate-800 mb-7 overflow-hidden">
       <div
         onClick={() => setOpen(!open)}
-        className="py-3.5 px-5 cursor-pointer flex items-center justify-between select-none"
+        className="py-3.5 px-5 cursor-pointer flex flex-col md:flex-row md:justify-between gap-0.5 select-none"
       >
-        <div className="flex items-center gap-2.5">
-          <span className="text-base">📐</span>
-          <span className="font-bold text-slate-100 text-sm">How to read these charts</span>
+        <div className="font-bold text-slate-100 text-md flex items-center gap-1.5 mb-2 md:m-0"><Ruler size={18} /> How to read these charts</div>
+        <div className="flex items-center">
           <span className="text-xs text-slate-500">Methodology and data sources</span>
+          <ChevronDown
+            size={13}
+            className="text-slate-500 transition-transform duration-200 ml-2"
+            style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
+          />
         </div>
-        <span
-          className="text-slate-500 text-base transition-transform duration-200"
-          style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
-        >▾</span>
       </div>
 
       {open && (
