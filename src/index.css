@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@theme {
+  /* Use Outfit as the default sans font and JetBrains Mono as the mono font */
+  --font-sans: "Outfit", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Menlo, monospace;
+}
+
+body {
+  background-color: #020617; /* slate-950 — prevents white flash before React mounts */
+}
