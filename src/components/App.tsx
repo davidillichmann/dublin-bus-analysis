@@ -104,6 +104,8 @@ export default function App() {
           <StatCard label="Gap"              value={(shortRoutesAvgPunctuality - longRoutesAvgPunctuality).toFixed(1) + "pp"} sub="Percentage point difference"              color="#fbbf24" />
         </div>
 
+        <MethodNote />
+
         {/* Category filter */}
         <div className="bg-slate-900 rounded-xl py-4 px-5 border border-slate-800 mb-4">
           <div className="text-xs text-slate-400 mb-2.5">
@@ -119,7 +121,7 @@ export default function App() {
             ))}
           </div>
         </div>
-        <div className="flex flex-wrap gap-2 mb-7 items-center">
+        <div className="flex flex-wrap gap-1 md:gap-2 mb-7 items-center">
           <span className="text-xs text-slate-600 mr-1">Filter:</span>
           {CATEGORIES.map(category => {
             const active = activeCategories.has(category.name);
@@ -134,8 +136,6 @@ export default function App() {
             );
           })}
         </div>
-
-        <MethodNote />
 
         {/* Charts */}
         <Section
