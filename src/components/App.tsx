@@ -99,8 +99,8 @@ export default function App() {
         {/* Stats */}
         <div className="flex gap-3 flex-wrap mb-7">
           <StatCard label="Correlation (r)"  value={timeRegression.r.toFixed(2)}                                    sub="Running time vs punctuality"                       color="#ef4444" />
-          <StatCard label="Short routes"     value={shortRoutesAvgPunctuality.toFixed(1) + "%"}                     sub={`${shortRoutes.length} routes under 40 min`}        color="#4ade80" />
-          <StatCard label="Long routes"      value={longRoutesAvgPunctuality.toFixed(1) + "%"}                      sub={`${longRoutes.length} routes over 65 min`}           color="#f87171" />
+          <StatCard label="Short routes"     value={shortRoutesAvgPunctuality.toFixed(1) + "%"}                     sub={`${shortRoutes.length} routes, 40 min or less`}        color="#4ade80" />
+          <StatCard label="Long routes"      value={longRoutesAvgPunctuality.toFixed(1) + "%"}                      sub={`${longRoutes.length} routes, 65 min or more`}           color="#f87171" />
           <StatCard label="Gap"              value={(shortRoutesAvgPunctuality - longRoutesAvgPunctuality).toFixed(1) + "pp"} sub="Percentage point difference"              color="#fbbf24" />
         </div>
 
@@ -257,7 +257,7 @@ export default function App() {
         >
           <h3 className="mt-0 mb-4.5 text-xl font-extrabold text-slate-50">Conclusions</h3>
           <p className="mt-0 mb-4 text-sm text-slate-400 leading-7">
-            <strong style={{ color: "#f87171" }}>The long-route model is not delivering reliable service.</strong> The correlation between route duration and poor punctuality (r = {timeRegression.r.toFixed(2)}) is strong, consistent, and holds across every part of the dataset. Short routes (under 40 min) average {shortRoutesAvgPunctuality.toFixed(1)}% punctuality. Long routes (over 65 min) average {longRoutesAvgPunctuality.toFixed(1)}%. That is an {(shortRoutesAvgPunctuality - longRoutesAvgPunctuality).toFixed(1)} percentage point gap.
+            <strong style={{ color: "#f87171" }}>The long-route model is not delivering reliable service.</strong> The correlation between route duration and poor punctuality (r = {timeRegression.r.toFixed(2)}) is strong, consistent, and holds across every part of the dataset. Short routes (40 min or less) average {shortRoutesAvgPunctuality.toFixed(1)}% punctuality. Long routes (65 min or more) average {longRoutesAvgPunctuality.toFixed(1)}%. That is an {(shortRoutesAvgPunctuality - longRoutesAvgPunctuality).toFixed(1)} percentage point gap.
           </p>
           <p className="mt-0 mb-4 text-sm text-slate-400 leading-7">
             <strong className="text-slate-200">Stops, not distance, are the primary driver.</strong> Express routes cover 18–28 km but average{" "}
