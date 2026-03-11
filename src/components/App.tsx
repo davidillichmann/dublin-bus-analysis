@@ -17,6 +17,7 @@ import RouteDot from "./charts/RouteDot.tsx";
 import RouteTooltip from "./charts/RouteTooltip.tsx";
 import {regressionLine} from "./charts/RegressionLine.tsx";
 import {HoverHint} from "./charts/HoverHint.tsx";
+import {SwipeHint} from "./charts/SwipeHint.tsx";
 import { HelpCircle } from "lucide-react";
 
 const ROUTES = ROUTES_DATA as Route[];
@@ -143,25 +144,28 @@ export default function App() {
           subtitle={`Low frequency routes. r = ${stopsRegression.r.toFixed(3)}. Every 10 extra stops costs ~${Math.abs(stopsRegression.slope * 10).toFixed(1)} percentage points. Express routes excluded from regression.`}
         >
           <ChartLegend showTop10={false} />
-          <div className="relative">
-            <HoverHint />
-            <ResponsiveContainer width="100%" height={560}>
-              <ComposedChart margin={{ top: 24, right: 28, bottom: 48, left: 16 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                <XAxis dataKey="stops" type="number" stroke="#475569" tick={{ fill: "#94a3b8", fontSize: 12 }} domain={[10, 66]}>
-                  <Label value="Number of Stops" position="bottom" offset={28} style={{ fill: "#64748b", fontSize: 13 }} />
-                </XAxis>
-                <YAxis dataKey="punctuality" type="number" stroke="#475569" tick={{ fill: "#94a3b8", fontSize: 12 }} domain={[50, 95]}>
-                  <Label value="Punctuality (%)" angle={-90} position="insideLeft" offset={8} style={{ fill: "#64748b", fontSize: 13 }} />
-                </YAxis>
-                <Tooltip content={() => <RouteTooltip route={hoveredData} />} offset={20} cursor={false} />
-                {regressionLine({ data: regularRoutes, xKey: "stops", yKey: "punctuality", xMin: 12, xMax: 62 })}
-                {CATEGORIES.map(category => {
-                  const routesInCategory = filteredRoutes.filter(route => categoryName(route.time) === category.name);
-                  return routesInCategory.length ? <Scatter key={category.name} data={routesInCategory} fill={category.color} shape={dotShape} /> : null;
-                })}
-              </ComposedChart>
-            </ResponsiveContainer>
+          <div className="overflow-x-auto">
+            <div className="relative" style={{ minWidth: 500 }}>
+              <SwipeHint />
+              <HoverHint />
+              <ResponsiveContainer width="100%" height={560}>
+                <ComposedChart margin={{ top: 24, right: 28, bottom: 48, left: 16 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                  <XAxis dataKey="stops" type="number" stroke="#475569" tick={{ fill: "#94a3b8", fontSize: 12 }} domain={[10, 66]}>
+                    <Label value="Number of Stops" position="bottom" offset={28} style={{ fill: "#64748b", fontSize: 13 }} />
+                  </XAxis>
+                  <YAxis dataKey="punctuality" type="number" stroke="#475569" tick={{ fill: "#94a3b8", fontSize: 12 }} domain={[50, 95]}>
+                    <Label value="Punctuality (%)" angle={-90} position="insideLeft" offset={8} style={{ fill: "#64748b", fontSize: 13 }} />
+                  </YAxis>
+                  <Tooltip content={() => <RouteTooltip route={hoveredData} />} offset={20} cursor={false} />
+                  {regressionLine({ data: regularRoutes, xKey: "stops", yKey: "punctuality", xMin: 12, xMax: 62 })}
+                  {CATEGORIES.map(category => {
+                    const routesInCategory = filteredRoutes.filter(route => categoryName(route.time) === category.name);
+                    return routesInCategory.length ? <Scatter key={category.name} data={routesInCategory} fill={category.color} shape={dotShape} /> : null;
+                  })}
+                </ComposedChart>
+              </ResponsiveContainer>
+            </div>
           </div>
         </Section>
 
@@ -170,25 +174,28 @@ export default function App() {
           subtitle={`Strongest correlation: r = ${timeRegression.r.toFixed(3)}. Every 10 extra minutes costs ~${Math.abs(timeRegression.slope * 10).toFixed(1)}pp. Express routes excluded from regression.`}
         >
           <ChartLegend showTop10={false} />
-          <div className="relative">
-            <HoverHint />
-            <ResponsiveContainer width="100%" height={560}>
-              <ComposedChart margin={{ top: 24, right: 28, bottom: 48, left: 16 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                <XAxis dataKey="time" type="number" stroke="#475569" tick={{ fill: "#94a3b8", fontSize: 12 }} domain={[22, 82]}>
-                  <Label value="Scheduled Running Time (min)" position="bottom" offset={28} style={{ fill: "#64748b", fontSize: 13 }} />
-                </XAxis>
-                <YAxis dataKey="punctuality" type="number" stroke="#475569" tick={{ fill: "#94a3b8", fontSize: 12 }} domain={[50, 95]}>
-                  <Label value="Punctuality (%)" angle={-90} position="insideLeft" offset={8} style={{ fill: "#64748b", fontSize: 13 }} />
-                </YAxis>
-                <Tooltip content={() => <RouteTooltip route={hoveredData} />} offset={20} cursor={false} />
-                {regressionLine({ data: regularRoutes, xKey: "time", yKey: "punctuality", xMin: 25, xMax: 78 })}
-                {CATEGORIES.map(category => {
-                  const routesInCategory = filteredRoutes.filter(route => categoryName(route.time) === category.name);
-                  return routesInCategory.length ? <Scatter key={category.name} data={routesInCategory} fill={category.color} shape={dotShape} /> : null;
-                })}
-              </ComposedChart>
-            </ResponsiveContainer>
+          <div className="overflow-x-auto">
+            <div className="relative" style={{ minWidth: 500 }}>
+              <SwipeHint />
+              <HoverHint />
+              <ResponsiveContainer width="100%" height={560}>
+                <ComposedChart margin={{ top: 24, right: 28, bottom: 48, left: 16 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                  <XAxis dataKey="time" type="number" stroke="#475569" tick={{ fill: "#94a3b8", fontSize: 12 }} domain={[22, 82]}>
+                    <Label value="Scheduled Running Time (min)" position="bottom" offset={28} style={{ fill: "#64748b", fontSize: 13 }} />
+                  </XAxis>
+                  <YAxis dataKey="punctuality" type="number" stroke="#475569" tick={{ fill: "#94a3b8", fontSize: 12 }} domain={[50, 95]}>
+                    <Label value="Punctuality (%)" angle={-90} position="insideLeft" offset={8} style={{ fill: "#64748b", fontSize: 13 }} />
+                  </YAxis>
+                  <Tooltip content={() => <RouteTooltip route={hoveredData} />} offset={20} cursor={false} />
+                  {regressionLine({ data: regularRoutes, xKey: "time", yKey: "punctuality", xMin: 25, xMax: 78 })}
+                  {CATEGORIES.map(category => {
+                    const routesInCategory = filteredRoutes.filter(route => categoryName(route.time) === category.name);
+                    return routesInCategory.length ? <Scatter key={category.name} data={routesInCategory} fill={category.color} shape={dotShape} /> : null;
+                  })}
+                </ComposedChart>
+              </ResponsiveContainer>
+            </div>
           </div>
         </Section>
 
@@ -197,22 +204,25 @@ export default function App() {
           subtitle={`These 16 routes run every 12 min or better. Punctuality = extra minutes you wait beyond schedule. r = ${ewtRegression.r.toFixed(3)}.`}
         >
           <ChartLegend />
-          <div className="relative">
-            <HoverHint />
-            <ResponsiveContainer width="100%" height={500}>
-              <ComposedChart margin={{ top: 24, right: 28, bottom: 48, left: 16 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                <XAxis dataKey="stops" type="number" stroke="#475569" tick={{ fill: "#94a3b8", fontSize: 12 }} domain={[24, 70]}>
-                  <Label value="Number of Stops" position="bottom" offset={28} style={{ fill: "#64748b", fontSize: 13 }} />
-                </XAxis>
-                <YAxis dataKey="ewt" type="number" stroke="#475569" tick={{ fill: "#94a3b8", fontSize: 12 }} domain={[0.4, 3.0]}>
-                  <Label value="Excess Wait Time (min)" angle={-90} position="insideLeft" offset={8} style={{ fill: "#64748b", fontSize: 13 }} />
-                </YAxis>
-                <Tooltip content={() => <RouteTooltip route={hoveredData} />} offset={20} cursor={false} />
-                {regressionLine({ data: highFrequencyRoutes, xKey: "stops", yKey: "ewt", xMin: 28, xMax: 66 })}
-                <Scatter data={highFrequencyRoutes} fill={CATEGORY_MAP["Long"].color} shape={dotShape} />
-              </ComposedChart>
-            </ResponsiveContainer>
+          <div className="overflow-x-auto">
+            <div className="relative" style={{ minWidth: 500 }}>
+              <SwipeHint />
+              <HoverHint />
+              <ResponsiveContainer width="100%" height={500}>
+                <ComposedChart margin={{ top: 24, right: 28, bottom: 48, left: 16 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                  <XAxis dataKey="stops" type="number" stroke="#475569" tick={{ fill: "#94a3b8", fontSize: 12 }} domain={[24, 70]}>
+                    <Label value="Number of Stops" position="bottom" offset={28} style={{ fill: "#64748b", fontSize: 13 }} />
+                  </XAxis>
+                  <YAxis dataKey="ewt" type="number" stroke="#475569" tick={{ fill: "#94a3b8", fontSize: 12 }} domain={[0.4, 3.0]}>
+                    <Label value="Excess Wait Time (min)" angle={-90} position="insideLeft" offset={8} style={{ fill: "#64748b", fontSize: 13 }} />
+                  </YAxis>
+                  <Tooltip content={() => <RouteTooltip route={hoveredData} />} offset={20} cursor={false} />
+                  {regressionLine({ data: highFrequencyRoutes, xKey: "stops", yKey: "ewt", xMin: 28, xMax: 66 })}
+                  <Scatter data={highFrequencyRoutes} fill={CATEGORY_MAP["Long"].color} shape={dotShape} />
+                </ComposedChart>
+              </ResponsiveContainer>
+            </div>
           </div>
         </Section>
 
