@@ -36,18 +36,26 @@ const ITEMS: DiscussionItem[] = [
 ];
 
 export default function DiscussionSection() {
-  const [openIdx, setOpenIdx] = useState<number | null>(null);
+  const [openSet, setOpenSet] = useState<Set<number>>(new Set());
+
+  function toggle(i: number) {
+    setOpenSet(prev => {
+      const next = new Set(prev);
+      next.has(i) ? next.delete(i) : next.add(i);
+      return next;
+    });
+  }
 
   return (
     <div className="bg-slate-900 rounded-2xl p-7 border border-slate-800 mt-5">
       <h3 className="mt-0 mb-4 text-xl font-extrabold text-slate-50">Discussion</h3>
 
       {ITEMS.map((item, i) => {
-        const isOpen = openIdx === i;
+        const isOpen = openSet.has(i);
         return (
           <div
             key={i}
-            onClick={() => setOpenIdx(isOpen ? null : i)}
+            onClick={() => toggle(i)}
             className={`mb-3 bg-slate-800 rounded-xl overflow-hidden border transition-colors duration-200 cursor-pointer ${isOpen ? "border-slate-700" : "border-slate-800"}`}
           >
             <div className="py-4 px-4.5 select-none">
