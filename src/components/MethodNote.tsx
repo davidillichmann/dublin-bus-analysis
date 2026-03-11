@@ -12,7 +12,7 @@ export default function MethodNote() {
       >
         <div className="font-bold text-slate-100 text-md flex items-center gap-1.5 mb-2 md:m-0"><Ruler size={18} /> How to read these charts</div>
         <div className="flex items-center">
-          <span className="text-xs text-slate-500">Methodology and data sources</span>
+          <span className="text-sm text-slate-500">Methodology and data sources</span>
           <ChevronDown
             size={13}
             className="text-slate-500 transition-transform duration-200 ml-2"
@@ -28,8 +28,8 @@ export default function MethodNote() {
             style={{ gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))" }}
           >
             <div className="bg-slate-800 rounded-lg p-4">
-              <h4 className="mt-0 mb-2 text-sm text-slate-100 font-bold">What is r (correlation)?</h4>
-              <p className="m-0 text-xs text-slate-400 leading-relaxed">
+              <h4 className="mt-0 mb-2 text-md text-slate-100 font-bold">What is r (correlation)?</h4>
+              <p className="m-0 text-sm text-slate-200 leading-relaxed">
                 The Pearson correlation coefficient (r) measures how strongly two variables are linearly related,
                 on a scale from -1 to +1. A value of -1 means a perfect inverse relationship (as one goes up,
                 the other goes down consistently). Zero means no relationship. The closer to -1 or +1, the
@@ -54,7 +54,7 @@ export default function MethodNote() {
                   </span>
                 ))}
               </div>
-              <p className="mt-2 mb-0 text-xs text-slate-600 leading-relaxed">
+              <p className="mt-2 mb-0 text-xs text-slate-400 leading-relaxed">
                 Thresholds from Cohen, J. (1988). Statistical Power Analysis for the Behavioral Sciences.
                 The red regression line in each chart is fitted to regular (non-express) low frequency routes only.
                 Express routes are shown but excluded from the trend, as they behave differently (few stops, long distance).
@@ -62,13 +62,13 @@ export default function MethodNote() {
             </div>
 
             <div className="bg-slate-800 rounded-lg p-4">
-              <h4 className="mt-0 mb-2 text-sm text-slate-100 font-bold">How is punctuality measured?</h4>
-              <p className="m-0 text-xs text-slate-400 leading-relaxed">
+              <h4 className="mt-0 mb-2 text-md text-slate-100 font-bold">How is punctuality measured?</h4>
+              <p className="m-0 text-sm text-slate-400 leading-relaxed">
                 <strong className="text-slate-200">Low frequency routes</strong> (running less than 5x per hour):
                 punctuality is the percentage of departures that leave between 1 minute early and 5 minutes 59 seconds
                 late compared to the schedule. A bus departing 6+ minutes late counts as not on time.
               </p>
-              <p className="mt-2 mb-0 text-xs text-slate-400 leading-relaxed">
+              <p className="mt-2 mb-0 text-sm text-slate-400 leading-relaxed">
                 <strong className="text-slate-200">High frequency routes</strong> (every 12 min or better):
                 Excess Wait Time (EWT) measures the extra minutes you wait beyond what the schedule would predict.
                 If buses ran perfectly to schedule, EWT would be 0. An EWT of 2.0 means you wait on average 2 extra minutes.

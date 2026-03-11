@@ -1,5 +1,6 @@
 import type { Route } from "../types";
 import { CATEGORIES, categoryName } from "../categories";
+import {ChevronDown} from "lucide-react";
 
 interface Props {
   data: Route[];
@@ -32,22 +33,22 @@ export default function CategoryBreakdown({ data, expanded, setExpanded }: Props
                   className="w-3 h-3 rounded-full"
                   style={{ background: category.color, boxShadow: `0 0 10px ${category.color}55` }}
                 />
-                <div>
+                <div className="flex flex-col md:flex-row md:items-center md:gap-2">
                   <span className="font-bold text-slate-100 text-base">{category.name}</span>
-                  <span className="text-slate-500 text-sm ml-2.5">{category.range}</span>
+                  <span className="text-slate-500 text-sm">{category.range}</span>
                 </div>
               </div>
-              <div className="flex items-center gap-5">
+              <div className="flex items-center gap-3">
                 <div className="text-right">
-                  <div className="text-xl font-extrabold font-mono" style={{ color: category.color }}>
+                  <div className="text-md md:text-xl font-extrabold font-mono" style={{ color: category.color }}>
                     {avg.toFixed(1)}%
                   </div>
                   <div className="text-xs text-slate-500">{routes.length} routes</div>
                 </div>
                 <span
-                  className="text-slate-500 text-xl transition-transform duration-200"
+                  className="text-slate-500 transition-transform duration-200"
                   style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
-                >▾</span>
+                ><ChevronDown /></span>
               </div>
             </div>
 

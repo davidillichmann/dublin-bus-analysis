@@ -2,16 +2,16 @@ import type { Route } from "../../types";
 import { CATEGORY_MAP, categoryName } from "../../categories";
 
 interface RowProps {
-  l: string;
-  v: string | number;
-  c?: string;
+  label: string;
+  value: string | number;
+  color?: string;
 }
 
-function Row({ l, v, c }: RowProps) {
+function Row({ label, value, color }: RowProps) {
   return (
     <div className="flex justify-between gap-4">
-      <span className="text-slate-400">{l}</span>
-      <span className="font-bold" style={{ color: c ?? "#e2e8f0" }}>{v}</span>
+      <span className="text-slate-400">{label}</span>
+      <span className="font-bold" style={{ color: color ?? "#e2e8f0" }}>{value}</span>
     </div>
   );
 }
@@ -46,21 +46,21 @@ export default function RouteTooltip({ route }: TooltipProps) {
           className="rounded py-0.5 px-2 text-xs text-amber-400 font-semibold mb-2"
           style={{ background: "#fbbf2418", border: "1px solid #fbbf2444" }}
         >
-          Top 10 busiest route (#{route.rank} by ridership)
+          Top #{route.rank} busiest route
         </div>
       )}
       <div className="border-t border-slate-700 pt-2">
         {route.punctuality != null && (
-          <Row l="Punctuality" v={route.punctuality.toFixed(1) + "%"}
-            c={route.punctuality >= 75 ? "#4ade80" : route.punctuality >= 65 ? "#fbbf24" : "#f87171"} />
+          <Row label="Punctuality" value={route.punctuality.toFixed(1) + "%"}
+               color={route.punctuality >= 75 ? "#4ade80" : route.punctuality >= 65 ? "#fbbf24" : "#f87171"} />
         )}
         {route.ewt != null && (
-          <Row l="Excess wait" v={route.ewt.toFixed(2) + " min"}
-            c={route.ewt <= 1.2 ? "#4ade80" : route.ewt <= 2.0 ? "#fbbf24" : "#f87171"} />
+          <Row label="Excess wait" value={route.ewt.toFixed(2) + " min"}
+               color={route.ewt <= 1.2 ? "#4ade80" : route.ewt <= 2.0 ? "#fbbf24" : "#f87171"} />
         )}
-        <Row l="Stops"        v={route.stops} />
-        <Row l="Running time" v={`${route.time} min (${category.range})`} />
-        <Row l="Length"       v={`${route.km} km`} />
+        <Row label="Stops" value={route.stops} />
+        <Row label="Running time" value={`${route.time} min`} color={category.color} />
+        <Row label="Length" value={`${route.km} km`} />
       </div>
     </div>
   );

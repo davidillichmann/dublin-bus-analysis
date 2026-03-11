@@ -66,7 +66,7 @@ export default function App() {
 
         {/* Header */}
         <div className="text-xs text-slate-600 uppercase tracking-widest mb-2.5">Data Analysis</div>
-        <h1 className="text-4xl font-extrabold mt-0 mb-3 text-slate-50 leading-[1.15]">
+        <h1 className="text-3xl md:text-4xl font-extrabold mt-0 mb-3 text-slate-50 leading-[1.15]">
           The Longer the Route, the Later the Bus
         </h1>
         <p className="text-base text-slate-400 mt-0 mb-5 leading-relaxed">
@@ -108,10 +108,10 @@ export default function App() {
 
         {/* Category filter */}
         <div className="bg-slate-900 rounded-xl py-4 px-5 border border-slate-800 mb-4">
-          <div className="text-xs text-slate-400 mb-2.5">
+          <div className="text-sm text-slate-400 mb-2.5">
             Routes are grouped into four categories based on <strong className="text-slate-200">quartiles of scheduled running time</strong> across the dataset (Q1 = 40 min, median = 50 min, Q3 = 65 min):
           </div>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-col md:flex-row gap-3">
             {CATEGORIES.map(category => (
               <span key={category.name} className="flex items-center gap-1.5 text-sm">
                 <span className="w-2.5 h-2.5 rounded-full inline-block" style={{ background: category.color }} />
@@ -142,20 +142,20 @@ export default function App() {
           title="1. Stop Count vs Punctuality"
           subtitle={`Low frequency routes. r = ${stopsRegression.r.toFixed(3)}. Every 10 extra stops costs ~${Math.abs(stopsRegression.slope * 10).toFixed(1)} percentage points.`}
         >
-          <ChartLegend />
+          <ChartLegend showTop10={false} />
           <div className="relative">
             <HoverHint />
             <ResponsiveContainer width="100%" height={560}>
               <ComposedChart margin={{ top: 24, right: 28, bottom: 48, left: 16 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                <XAxis dataKey="stops" type="number" stroke="#475569" tick={{ fill: "#94a3b8", fontSize: 12 }} domain={[10, 68]}>
+                <XAxis dataKey="stops" type="number" stroke="#475569" tick={{ fill: "#94a3b8", fontSize: 12 }} domain={[10, 66]}>
                   <Label value="Number of Stops" position="bottom" offset={28} style={{ fill: "#64748b", fontSize: 13 }} />
                 </XAxis>
-                <YAxis dataKey="punctuality" type="number" stroke="#475569" tick={{ fill: "#94a3b8", fontSize: 12 }} domain={[48, 95]}>
+                <YAxis dataKey="punctuality" type="number" stroke="#475569" tick={{ fill: "#94a3b8", fontSize: 12 }} domain={[50, 95]}>
                   <Label value="Punctuality (%)" angle={-90} position="insideLeft" offset={8} style={{ fill: "#64748b", fontSize: 13 }} />
                 </YAxis>
                 <Tooltip content={() => <RouteTooltip route={hoveredData} />} offset={20} cursor={false} />
-                {regressionLine({ data: regularRoutes, xKey: "stops", yKey: "punctuality", xMin: 14, xMax: 66 })}
+                {regressionLine({ data: regularRoutes, xKey: "stops", yKey: "punctuality", xMin: 12, xMax: 62 })}
                 {CATEGORIES.map(category => {
                   const routesInCategory = filteredRoutes.filter(route => categoryName(route.time) === category.name);
                   return routesInCategory.length ? <Scatter key={category.name} data={routesInCategory} fill={category.color} shape={dotShape} /> : null;
@@ -169,20 +169,20 @@ export default function App() {
           title="2. Running Time vs Punctuality"
           subtitle={`Strongest correlation: r = ${timeRegression.r.toFixed(3)}. Every 10 extra minutes costs ~${Math.abs(timeRegression.slope * 10).toFixed(1)}pp. Express routes excluded from regression.`}
         >
-          <ChartLegend />
+          <ChartLegend showTop10={false} />
           <div className="relative">
             <HoverHint />
             <ResponsiveContainer width="100%" height={560}>
               <ComposedChart margin={{ top: 24, right: 28, bottom: 48, left: 16 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                <XAxis dataKey="time" type="number" stroke="#475569" tick={{ fill: "#94a3b8", fontSize: 12 }} domain={[20, 88]}>
+                <XAxis dataKey="time" type="number" stroke="#475569" tick={{ fill: "#94a3b8", fontSize: 12 }} domain={[22, 82]}>
                   <Label value="Scheduled Running Time (min)" position="bottom" offset={28} style={{ fill: "#64748b", fontSize: 13 }} />
                 </XAxis>
-                <YAxis dataKey="punctuality" type="number" stroke="#475569" tick={{ fill: "#94a3b8", fontSize: 12 }} domain={[48, 95]}>
+                <YAxis dataKey="punctuality" type="number" stroke="#475569" tick={{ fill: "#94a3b8", fontSize: 12 }} domain={[50, 95]}>
                   <Label value="Punctuality (%)" angle={-90} position="insideLeft" offset={8} style={{ fill: "#64748b", fontSize: 13 }} />
                 </YAxis>
                 <Tooltip content={() => <RouteTooltip route={hoveredData} />} offset={20} cursor={false} />
-                {regressionLine({ data: regularRoutes, xKey: "time", yKey: "punctuality", xMin: 22, xMax: 80 })}
+                {regressionLine({ data: regularRoutes, xKey: "time", yKey: "punctuality", xMin: 25, xMax: 78 })}
                 {CATEGORIES.map(category => {
                   const routesInCategory = filteredRoutes.filter(route => categoryName(route.time) === category.name);
                   return routesInCategory.length ? <Scatter key={category.name} data={routesInCategory} fill={category.color} shape={dotShape} /> : null;
@@ -194,7 +194,7 @@ export default function App() {
 
         <Section
           title="3. Stop Count vs Excess Wait Time (High Frequency Routes)"
-          subtitle={`These 16 routes run every 12 min or better. Punctuality = extra minutes you wait beyond schedule. r = ${ewtRegression.r.toFixed(3)}. All are in the top ridership tier.`}
+          subtitle={`These 16 routes run every 12 min or better. Punctuality = extra minutes you wait beyond schedule. r = ${ewtRegression.r.toFixed(3)}.`}
         >
           <ChartLegend />
           <div className="relative">
@@ -209,7 +209,7 @@ export default function App() {
                   <Label value="Excess Wait Time (min)" angle={-90} position="insideLeft" offset={8} style={{ fill: "#64748b", fontSize: 13 }} />
                 </YAxis>
                 <Tooltip content={() => <RouteTooltip route={hoveredData} />} offset={20} cursor={false} />
-                {regressionLine({ data: highFrequencyRoutes, xKey: "stops", yKey: "ewt", xMin: 26, xMax: 68 })}
+                {regressionLine({ data: highFrequencyRoutes, xKey: "stops", yKey: "ewt", xMin: 28, xMax: 66 })}
                 <Scatter data={highFrequencyRoutes} fill={CATEGORY_MAP["Long"].color} shape={dotShape} />
               </ComposedChart>
             </ResponsiveContainer>
@@ -256,19 +256,19 @@ export default function App() {
           style={{ background: "linear-gradient(135deg,#1e293b,#0f172a)" }}
         >
           <h3 className="mt-0 mb-4.5 text-xl font-extrabold text-slate-50">Conclusions</h3>
-          <p className="mt-0 mb-4 text-sm text-slate-400 leading-7">
+          <p className="mt-0 mb-4 text-sm text-slate-300 leading-7">
             <strong style={{ color: "#f87171" }}>The long-route model is not delivering reliable service.</strong> The correlation between route duration and poor punctuality (r = {timeRegression.r.toFixed(2)}) is strong, consistent, and holds across every part of the dataset. Short routes (40 min or less) average {shortRoutesAvgPunctuality.toFixed(1)}% punctuality. Long routes (65 min or more) average {longRoutesAvgPunctuality.toFixed(1)}%. That is an {(shortRoutesAvgPunctuality - longRoutesAvgPunctuality).toFixed(1)} percentage point gap.
           </p>
-          <p className="mt-0 mb-4 text-sm text-slate-400 leading-7">
+          <p className="mt-0 mb-4 text-sm text-slate-300 leading-7">
             <strong className="text-slate-200">Stops, not distance, are the primary driver.</strong> Express routes cover 18–28 km but average{" "}
             <strong style={{ color: "#4ade80" }}>{expressAvg}%</strong> punctuality by skipping most stops. Every stop introduces compounding variability through dwell time, traffic signals, and the constant decelerate-stop-accelerate cycle. On routes like the C4, stops are packed every 350m (below{" "}
             <a href="https://humantransit.org/2010/11/san-francisco-a-rational-stop-spacing-plan.html" target="_blank" rel="noopener" style={{ color: "#60a5fa", textDecoration: "none", borderBottom: "1px dotted #60a5fa" }}>the 400m standard</a>
             ), meaning the bus never reaches a continuous cruising speed.
           </p>
-          <p className="mt-0 mb-4 text-sm text-slate-400 leading-7">
+          <p className="mt-0 mb-4 text-sm text-slate-300 leading-7">
             <strong className="text-slate-200">Long routes are structurally fragile.</strong> A single disruption cascades across the entire line. Every passenger suffers, not just those near the problem. Shorter routes with good interchange points contain disruptions to one segment. The rest of the network keeps running, and passengers can reroute at the transfer.
           </p>
-          <p className="m-0 text-sm text-slate-400 leading-7">
+          <p className="m-0 text-sm text-slate-300 leading-7">
             <strong className="text-slate-200">A network of shorter routes could push the whole system closer to 80%+ punctuality.</strong> The data shows that reliability does not degrade gradually: it holds reasonably well up to about 40 minutes, then drops sharply. A network designed primarily around routes of 30 minutes or less, with well-timed interchange points, would keep most routes in the high-reliability zone. The same buses, drivers, and budget could deliver a fundamentally more dependable service.
           </p>
         </div>
