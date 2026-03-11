@@ -140,7 +140,7 @@ export default function App() {
         {/* Charts */}
         <Section
           title="1. Stop Count vs Punctuality"
-          subtitle={`Low frequency routes. r = ${stopsRegression.r.toFixed(3)}. Every 10 extra stops costs ~${Math.abs(stopsRegression.slope * 10).toFixed(1)} percentage points.`}
+          subtitle={`Low frequency routes. r = ${stopsRegression.r.toFixed(3)}. Every 10 extra stops costs ~${Math.abs(stopsRegression.slope * 10).toFixed(1)} percentage points. Express routes excluded from regression.`}
         >
           <ChartLegend showTop10={false} />
           <div className="relative">
